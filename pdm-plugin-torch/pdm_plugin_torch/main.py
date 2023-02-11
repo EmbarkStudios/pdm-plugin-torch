@@ -14,7 +14,7 @@ from pdm.core import Core
 from pdm.models.candidates import Candidate
 from pdm.models.repositories import BaseRepository, LockedRepository
 from pdm.models.requirements import Requirement, parse_requirement
-from pdm.models.specifiers import get_specifier
+from pdm.models.specifiers import PySpecSet, get_specifier
 from pdm.project import Project
 from pdm.project.config import ConfigItem
 from pdm.resolver import resolve
@@ -267,6 +267,17 @@ def check_lockfile(project: Project, lock_name: str) -> str | None:
     return True
 
 
+def get_settings(project: Project):
+    from pdm import __version__
+
+    old_path = PySpecSet("<2.3")
+    if old_path.contains(__version__.__version__):
+        return project.pyproject["tool"]["pdm"]["plugins"]["torch"]
+
+    else:
+        return project.tool_settings["plugins"]["torch"]
+
+
 class TorchCommand(BaseCommand):
     """Generate a lockfile for torch specifically."""
 
@@ -298,9 +309,7 @@ class TorchCommand(BaseCommand):
             self.handle_lock(project, options)
 
     def handle_install(self, project, options):
-        plugin_config = Configuration.from_toml(
-            project.pyproject["tool"]["pdm"]["plugins"]["torch"]
-        )
+        plugin_config = Configuration.from_toml(get_settings(project))
 
         resolves = plugin_config.variants
         if options.api not in resolves:
@@ -331,9 +340,7 @@ class TorchCommand(BaseCommand):
         )
 
     def handle_lock(self, project, options):
-        plugin_config = Configuration.from_toml(
-            project.pyproject["tool"]["pdm"]["plugins"]["torch"]
-        )
+        plugin_config = Configuration.from_toml(get_settings(project))
 
         if options.check:
             is_updated = check_lockfile(project, plugin_config.lockfile)
@@ -353,7 +360,7 @@ class TorchCommand(BaseCommand):
                 sys.exit(0)
 
         results = {}
-        for (api, (url, local_version)) in plugin_config.variants.items():
+        for api, (url, local_version) in plugin_config.variants.items():
             reqs = [
                 parse_requirement(f"{req}{local_version}", False)
                 for req in plugin_config.dependencies
