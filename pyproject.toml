@@ -48,7 +48,7 @@ profile = "black"
 combine_as_imports = true
 lines_between_types = 1
 lines_after_imports = 2
-src_paths = ["pdm_plugin_torch"]
+src_paths = ["pdm-plugin-torch"]
 
 [tool.black]
 target-version = ['py38']
