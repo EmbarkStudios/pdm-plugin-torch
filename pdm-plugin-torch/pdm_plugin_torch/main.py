@@ -6,7 +6,7 @@ from typing import Iterable
 
 import tomlkit
 
-from pdm import termui
+from pdm import __version__, termui
 from pdm._types import Source
 from pdm.cli.commands.base import BaseCommand
 from pdm.cli.utils import fetch_hashes, format_lockfile, format_resolution_impossible
@@ -25,6 +25,9 @@ from resolvelib.reporters import BaseReporter
 from resolvelib.resolvers import ResolutionImpossible, ResolutionTooDeep, Resolver
 
 from pdm_plugin_torch.config import Configuration
+
+
+is_pdm22 = PySpecSet("<2.3").contains(__version__.__version__)
 
 
 def sources(project: Project, sources: list) -> list[Source]:
@@ -226,7 +229,10 @@ def is_lockfile_compatible(project: Project, lock_name: str) -> bool:
         lockfile_version += ".0"
 
     accepted = get_specifier(f"~={lockfile_version}")
-    return accepted.contains(project.LOCKFILE_VERSION)
+    if is_pdm22:
+        return accepted.contains(project.LOCKFILE_VERSION)
+
+    return accepted.contains(project.lockfile.spec_version)
 
 
 def is_lockfile_hash_match(project: Project, lock_name: str) -> bool:
@@ -240,7 +246,11 @@ def is_lockfile_hash_match(project: Project, lock_name: str) -> bool:
         return False
 
     algo, hash_value = hash_in_lockfile.split(":")
-    content_hash = project.get_content_hash(algo)
+    if is_pdm22:
+        content_hash = project.get_content_hash(algo)
+    else:
+        content_hash = project.pyproject.content_hash(algo)
+
     return content_hash == hash_value
 
 
@@ -268,10 +278,7 @@ def check_lockfile(project: Project, lock_name: str) -> str | None:
 
 
 def get_settings(project: Project):
-    from pdm import __version__
-
-    old_path = PySpecSet("<2.3")
-    if old_path.contains(__version__.__version__):
+    if is_pdm22:
         return project.pyproject["tool"]["pdm"]["plugins"]["torch"]
 
     else:
