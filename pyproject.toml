@@ -1,0 +1,70 @@
+[project]
+name = "pdm-plugin-torch"
+version = "0.1.2"
+description = "A plugin to help installing torch versions"
+authors = [
+    {name = "Embark Studios", email = "python@embark-studios.com"},
+]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+tools = [
+   "pytest~=6.0",
+   "black~=22.1",
+   "bandit~=1.7",
+   "isort~=5.10",
+]
+
+docs = [
+    "Sphinx~=4.4",
+    "sphinxcontrib-apidoc~=0.3",
+    "sphinx-autodoc-typehints~=1.17",
+    "sphinx-rtd-theme~=1.0.0",
+    "myst-parser~=0.18.0"
+]
+
+[project.urls]
+repository = "https://github.com/EmbarkStudios/pdm-plugin-torch"
+
+[build-system]
+requires = ["pdm-pep517>=1.0.0"]
+build-backend = "pdm.pep517.api"
+
+[project.entry-points.pdm]
+pdm_plugin_torch = "pdm_plugin_torch.main:torch_plugin"
+
+[tool.pdm.build]
+package-dir = "src"
+includes = ["src/pdm_plugin_torch"]
+source-includes = ["tests", "CHANGELOG.md", "LICENSE", "README.md"]
+# editables backend doesn't work well with namespace packages
+editable-backend = "path"
+
+[tool.isort]
+py_version = 38
+profile = "black"
+combine_as_imports = true
+lines_between_types = 1
+lines_after_imports = 2
+src_paths = ["pdm_plugin_torch"]
+
+[tool.black]
+target-version = ['py38']
+
+[tool.mypy]
+check_untyped_defs = true
+ignore_missing_imports = true
+show_error_codes = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+files = "src"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+log_cli = true
+#log_cli_level = "INFO"  # Useful when debugging locally
+log_format = "%(asctime)s:\t%(message)s"
+log_date_format = "%H:%M:%S"

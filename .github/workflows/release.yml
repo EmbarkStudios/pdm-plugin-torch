@@ -1,0 +1,59 @@
+name: Release
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  create-release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@master
+
+    - name: Fetch tags
+      run: git fetch --prune --unshallow --tags
+
+    - uses: pdm-project/setup-pdm@v3
+      name: Setup PDM
+      with:
+        python-version: 3.8
+        architecture: x64
+        version: 2.1.5
+        prerelease: true
+        enable-pep582: true
+        cache: true
+        cache-dependency-path: '*.lock' # we have pdm.lock and torch.lock
+
+    - name: Install dependencies
+      run: pdm install -d -G ci
+
+    - name: Build Packages
+      run: pdm build
+
+    - name: "Build Changelog"
+      id: github_release
+      uses: mikepenz/release-changelog-builder-action@v3.4.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        configuration: ".github/release-action-config.json"
+        toTag: ${{ github.ref }}
+
+    - name: Release to GitHub
+      uses: mikepenz/action-gh-release@v0.2.0-a03
+      with:
+        body: ${{ steps.github_release.outputs.changelog }}
+        prerelease: false
+        tag_name: ${{ github.ref }}
+        name: "Release ${{ github.ref_name }}"
+        files: |
+          dist/*
+          LICENSE-*
+
+    - name: Publish Packages to PyPi
+      env:
+        PDM_PUBLISH_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+
+      run: pdm publish -r pypi -u __token__

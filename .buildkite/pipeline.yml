@@ -1,0 +1,72 @@
+plugin_base: &plugin_base
+    service-account-name: monorepo-ci
+    image: gcr.io/embark-shared/ml/ci-runner@sha256:ca727fde178e60353820416619201cb0302b8896ddeda412916e7aa802fb441d
+    default-secret-name: buildkite-k8s-plugin
+    always-pull: false
+    use-agent-node-affinity: true
+
+agents: &agent
+  cluster: builds-fi-2
+  queue: monorepo-ci
+  size: small
+
+tiny: &tiny
+  agents: *agent
+  plugins:
+  - EmbarkStudios/k8s#1.2.10:
+      << : *plugin_base
+      resources-limit-cpu: 3
+      resources-limit-memory: 10Gi
+
+  agents: *agent
+
+small: &small
+  agents: *agent
+  plugins:
+  - EmbarkStudios/k8s#1.2.10:
+      << : *plugin_base
+      resources-limit-cpu: 7
+      resources-limit-memory: 20Gi
+
+
+
+steps:
+  - group: ":passport_control: Validating PR"
+    steps:
+      - label: ":hourglass: Validating branch age"
+        command: bash .buildkite/validate-branch-age.sh
+        << : *tiny
+
+      - label: ":straight_ruler: Checking line-endings"
+        command: bash .buildkite/check-line-endings.sh
+        << : *tiny
+
+      - label: ":lock: Checking lockfile"
+        command: bash .buildkite/validate-lockfile.sh
+        << : *tiny
+
+  - wait
+
+  - group: ":vertical_traffic_light: Validating changes"
+    steps:
+      - label: ":python-black: Validate black"
+        command: bash .buildkite/run-black.sh
+        << : *tiny
+
+      - label: ":isort: Validate isort"
+        command: bash .buildkite/run-isort.sh
+        << : *tiny
+
+      - label: ":bandit: Validate bandit"
+        command: bash .buildkite/run-bandit.sh
+        << : *tiny
+
+      - label: ":pytest: Run tests"
+        command: bash .buildkite/run-pytest.sh
+        << : *small
+
+  - wait
+
+  - label: ":package: Validate packaging"
+    command: bash .buildkite/run-package.sh
+    << : *tiny

@@ -1,0 +1,22 @@
+{
+	"categories": [
+		{
+			"title": "## 🚀 Features",
+			"labels": ["enhancement"]
+		},
+		{
+			"title": "## 🐛 Fixes",
+			"labels": ["bug", "t: bug"]
+		},
+		{
+			"title": "## 🧪 Tests",
+			"labels": ["test", "a: test"]
+		},
+		{
+			"title": "## 🧪 Development",
+			"labels": ["a: ci", "documentation"]
+		}
+	],
+    "template": "Merged PRs since last release:\n\n${{CHANGELOG}}\n\n## Uncategorized:\n\n${{UNCATEGORIZED}}\n",
+	"pr_template": "- ${{AUTHOR}}: ${{TITLE}} (#${{NUMBER}})"
+}

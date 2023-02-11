@@ -1,0 +1,162 @@
+[cu111]
+[[cu111.package]]
+name = "torch"
+version = "1.10.2+cu111"
+requires_python = ">=3.6.2"
+summary = "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
+dependencies = [
+    "typing-extensions",
+]
+
+[[cu111.package]]
+name = "typing-extensions"
+version = "4.4.0"
+requires_python = ">=3.7"
+summary = "Backported and Experimental Type Hints for Python 3.7+"
+
+[cu111.metadata]
+[cu111.metadata.files]
+"torch 1.10.2+cu111" = [
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp36-cp36m-linux_x86_64.whl", hash = "sha256:bbe445308a43960efeabc4f4a4b6c5d0db209ef5d5148672c750943d1ea42f54"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp36-cp36m-win_amd64.whl", hash = "sha256:4b4bf40d844fdcf9b7261e62aff9eede7c89c2b904343b3f9dc12393763779cb"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp37-cp37m-linux_x86_64.whl", hash = "sha256:ccbd72f39d76fb7e7db6513bcc8e4ee684348f9865bd8cddca6ce2dd07b3ccd0"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp37-cp37m-win_amd64.whl", hash = "sha256:588188a37e2f2c9bb8f807e0d49ac4d66b9ef23f4417233247c5d2f796c4f42d"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp38-cp38-linux_x86_64.whl", hash = "sha256:bcb611272d7aa5c2f7c1648b2227303a023b1de46aabccf1846a8aca1bfb5cd8"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp38-cp38-win_amd64.whl", hash = "sha256:7c23faff945e98c6e242ce41a480e7fe48426140d5994ea3b9886c02145d58cf"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp39-cp39-linux_x86_64.whl", hash = "sha256:78ae2260ac1902c5a224fe1b7994072bbfa7ef8a1734d8697ca74249fa6391c5"},
+    {url = "https://download.pytorch.org/whl/cu111/torch-1.10.2%2Bcu111-cp39-cp39-win_amd64.whl", hash = "sha256:566cbfad47b25ef6b1023518982179439d8e53069f3d2341e8adcd1e4b2ef179"},
+]
+"typing-extensions 4.4.0" = [
+    {url = "https://files.pythonhosted.org/packages/0b/8e/f1a0a5a76cfef77e1eb6004cb49e5f8d72634da638420b9ea492ce8305e8/typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {url = "https://files.pythonhosted.org/packages/e3/a7/8f4e456ef0adac43f452efc2d0e4b242ab831297f1bac60ac815d37eb9cf/typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
+]
+
+[cu113]
+[[cu113.package]]
+name = "torch"
+version = "1.10.2+cu113"
+requires_python = ">=3.6.2"
+summary = "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
+dependencies = [
+    "typing-extensions",
+]
+
+[[cu113.package]]
+name = "typing-extensions"
+version = "4.4.0"
+requires_python = ">=3.7"
+summary = "Backported and Experimental Type Hints for Python 3.7+"
+
+[cu113.metadata]
+[cu113.metadata.files]
+"torch 1.10.2+cu113" = [
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp36-cp36m-linux_x86_64.whl", hash = "sha256:bb3a9405184c78f041c83e1483a239986794009f531f94ad53173bdb71e3c35f"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp36-cp36m-win_amd64.whl", hash = "sha256:368d0b1ac91b556a100da35a7784a0f2cd4b1a7298b9122faa5dd2facf9871fc"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp37-cp37m-linux_x86_64.whl", hash = "sha256:cadda6a1d51efde306eb057667e1da91a8f98d7f7cf4ad7ae1c94a5e1a6a4f5e"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp37-cp37m-win_amd64.whl", hash = "sha256:a1a1f50ff5c6d83fac2adc07a8e76a197381bcd847be0d80fa2ab446eb70039f"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp38-cp38-linux_x86_64.whl", hash = "sha256:c59e8f17a76757f22ffdf6da37561ce7bd7f92c5d602e3371eb223e5a976b6ec"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp38-cp38-win_amd64.whl", hash = "sha256:2a9ca5be12ab83e59a8b2a9522c62c3b17c92ac06ac94f3fda9ba8393fb1cea6"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp39-cp39-linux_x86_64.whl", hash = "sha256:f1f985ce8591b20aa038756a83c348144ca10119952f4ae5703dbb7aae1b3ce2"},
+    {url = "https://download.pytorch.org/whl/cu113/torch-1.10.2%2Bcu113-cp39-cp39-win_amd64.whl", hash = "sha256:15c87057a7c221460abee15795710c9b50898167abb134fdb39eced76f6e9dff"},
+]
+"typing-extensions 4.4.0" = [
+    {url = "https://files.pythonhosted.org/packages/0b/8e/f1a0a5a76cfef77e1eb6004cb49e5f8d72634da638420b9ea492ce8305e8/typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {url = "https://files.pythonhosted.org/packages/e3/a7/8f4e456ef0adac43f452efc2d0e4b242ab831297f1bac60ac815d37eb9cf/typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
+]
+
+["rocm4.2"]
+[["rocm4.2".package]]
+name = "torch"
+version = "1.10.2+rocm4.2"
+requires_python = ">=3.6.2"
+summary = "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
+dependencies = [
+    "typing-extensions",
+]
+
+[["rocm4.2".package]]
+name = "typing-extensions"
+version = "4.4.0"
+requires_python = ">=3.7"
+summary = "Backported and Experimental Type Hints for Python 3.7+"
+
+["rocm4.2".metadata]
+["rocm4.2".metadata.files]
+"torch 1.10.2+rocm4.2" = [
+    {url = "https://download.pytorch.org/whl/rocm4.2/torch-1.10.2%2Brocm4.2-cp36-cp36m-linux_x86_64.whl", hash = "sha256:57547f4671c167997b543d6f7fcc43f3c57f415fc5873362eddf4734e4639e4b"},
+    {url = "https://download.pytorch.org/whl/rocm4.2/torch-1.10.2%2Brocm4.2-cp37-cp37m-linux_x86_64.whl", hash = "sha256:a376348cf178cd08bc9f174f5e41ca6036b0f8ad503628b6010ae576a06bcc38"},
+    {url = "https://download.pytorch.org/whl/rocm4.2/torch-1.10.2%2Brocm4.2-cp38-cp38-linux_x86_64.whl", hash = "sha256:a4373f5467391d95301258903dbac85c8676312b9aaaf0ff923cd5bcde8d29af"},
+    {url = "https://download.pytorch.org/whl/rocm4.2/torch-1.10.2%2Brocm4.2-cp39-cp39-linux_x86_64.whl", hash = "sha256:43c67a5e6f940ee2e6e2e4903d56f0ce8207fca0418c7607ca5358719741f100"},
+]
+"typing-extensions 4.4.0" = [
+    {url = "https://files.pythonhosted.org/packages/0b/8e/f1a0a5a76cfef77e1eb6004cb49e5f8d72634da638420b9ea492ce8305e8/typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {url = "https://files.pythonhosted.org/packages/e3/a7/8f4e456ef0adac43f452efc2d0e4b242ab831297f1bac60ac815d37eb9cf/typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
+]
+
+[cpu]
+[[cpu.package]]
+name = "torch"
+version = "1.10.2"
+requires_python = ">=3.6.2"
+summary = "Tensors and Dynamic neural networks in Python with strong GPU acceleration"
+dependencies = [
+    "typing-extensions",
+]
+
+[[cpu.package]]
+name = "typing-extensions"
+version = "4.4.0"
+requires_python = ">=3.7"
+summary = "Backported and Experimental Type Hints for Python 3.7+"
+
+[cpu.metadata]
+[cpu.metadata.files]
+"torch 1.10.2" = [
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp36-cp36m-linux_x86_64.whl", hash = "sha256:71b191eb16569d70a3d524d85ae31dd3a4a375190d8ad10a9ead515cecf7186b"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp36-cp36m-win_amd64.whl", hash = "sha256:1fbc41a911dda8242e7e8ca1fca0ebfbbb49179a541bb49a4a65ce0caed557af"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp37-cp37m-linux_x86_64.whl", hash = "sha256:824a7e3b6df1dc0ec1a392990431e4a9474b5c39e81e09c85e2fb193a3719de4"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp37-cp37m-win_amd64.whl", hash = "sha256:5cbb1da77de878d36aaf5370e682920cfe20dca36d530244d0549fe6c07ac6d0"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp38-cp38-linux_x86_64.whl", hash = "sha256:2dc2ac989b74578850e95d7aaea8194702de7534ad20876c83ac01363ee97d60"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp38-cp38-win_amd64.whl", hash = "sha256:51a27eb78f3219e7036b9cfc37a97ac69cd942e8c339e4d793c1d300e4d5459d"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp39-cp39-linux_x86_64.whl", hash = "sha256:318d52242f07288bec58829d445452ee5767f34ba0cf32ec08c50febecc47e24"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2%2Bcpu-cp39-cp39-win_amd64.whl", hash = "sha256:822e3c3f8eb042570fe69b665c955c36970ecb8f5bec9a43a5ed7bbe1831ea93"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp310-cp310-manylinux2014_aarch64.whl", hash = "sha256:8f3fd2e3ffc3bb867133fdf7fbcc8a0bb2e62a5c0696396f51856f5abf9045a8"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:935e5ac804c5093c79f23a7e6ca5b912c166071aa9d8b4a0a3d6a85126d6a47b"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp36-none-macosx_10_9_x86_64.whl", hash = "sha256:6a81f886823bbd15edc2dc0908fa214070df61c9f7ab8831f0a03630275cca5a"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:ef99b8cca5f9358119b07956915faf6e7906f433ab4a603c160ae9de88918371"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp37-none-macosx_10_9_x86_64.whl", hash = "sha256:6da1b877880435440a5aa9678ef0f01986d4886416844db1d97ebfb7fd1778d0"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:9ef4c004f9e5168bd1c1930c6aff25fed5b097de81db6271ffbb2e4fb8b89319"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp38-none-macosx_10_9_x86_64.whl", hash = "sha256:f281438ee99bd72ad65c0bba1026a32e45c3b636bc067fc145ad291e9ea2faab"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp38-none-macosx_11_0_arm64.whl", hash = "sha256:3592d3dd62b32760c82624e7586222747fe2281240e8653970b35f1d6d4a434c"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:97b7b0c667e8b0dd1fc70137a36e0a4841ec10ef850bda60500ad066bef3e2de"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp39-none-macosx_10_9_x86_64.whl", hash = "sha256:5b68e9108bd7ebd99eee941686046c517cfaac5331f757bcf440fe02f2e3ced1"},
+    {url = "https://download.pytorch.org/whl/cpu/torch-1.10.2-cp39-none-macosx_11_0_arm64.whl", hash = "sha256:b07ef01e36b716d0d65ca60c4db0ac9d094a0e797d9b55290da4dcda91463b6c"},
+    {url = "https://files.pythonhosted.org/packages/01/73/a8dcb6da2193980309bf2d605d0ff56698a7c6977ea954413b163baddf77/torch-1.10.2-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:3eee3cf53c1f8fb3f1fe107a22025a8501fc6440d14e09599ba7153002531f84"},
+    {url = "https://files.pythonhosted.org/packages/0a/e9/085d1399f5cc1b203d2926b90e76e9678f74b5a078cd491e1c3caddb7abe/torch-1.10.2-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:fbaf18c1b3e0b31af194a9d853e3739464cf982d279df9d34dd18f1c2a471878"},
+    {url = "https://files.pythonhosted.org/packages/2f/48/16d106d2ce3644eb09ef0c78e4afdd6cb12942f01fd290fdd50e9e4f3430/torch-1.10.2-cp310-cp310-manylinux2014_aarch64.whl", hash = "sha256:8f3fd2e3ffc3bb867133fdf7fbcc8a0bb2e62a5c0696396f51856f5abf9045a8"},
+    {url = "https://files.pythonhosted.org/packages/36/f1/54ffb7f517e040667d027e8a9ae82ed6782c894e60333c7f884e4e776a41/torch-1.10.2-cp36-none-macosx_10_9_x86_64.whl", hash = "sha256:6a81f886823bbd15edc2dc0908fa214070df61c9f7ab8831f0a03630275cca5a"},
+    {url = "https://files.pythonhosted.org/packages/48/2e/23ee7f39b883dde0f1bc9dffa4a67e24fd61991926a01dadd5c8d288a604/torch-1.10.2-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:97b7b0c667e8b0dd1fc70137a36e0a4841ec10ef850bda60500ad066bef3e2de"},
+    {url = "https://files.pythonhosted.org/packages/4a/a0/3b8d5b80560afbff0688edd66926335bef153d91a95926810ab234798ae2/torch-1.10.2-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:ab77a9f838874f295ed5410c0686fa22547456e0116efb281c66ef5f9d46fe28"},
+    {url = "https://files.pythonhosted.org/packages/58/54/0d8c4fba0af8323aa28d99f040ffacd4772bc0f219d5b31f70433d784eb1/torch-1.10.2-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:ef99b8cca5f9358119b07956915faf6e7906f433ab4a603c160ae9de88918371"},
+    {url = "https://files.pythonhosted.org/packages/6c/00/5d6b86f8765b2e0d93d644fdcb31dd8140960b24dbf11c97cb3c74518749/torch-1.10.2-cp37-cp37m-win_amd64.whl", hash = "sha256:d43bc3f3a2d89ae185ef96d903c935c335219231e57685658648396984e2a67a"},
+    {url = "https://files.pythonhosted.org/packages/7b/91/89bbe2316b93671b6bccec094df6bc66109cf6d21a364cd2f1becd11ba3c/torch-1.10.2-cp39-none-macosx_11_0_arm64.whl", hash = "sha256:b07ef01e36b716d0d65ca60c4db0ac9d094a0e797d9b55290da4dcda91463b6c"},
+    {url = "https://files.pythonhosted.org/packages/7e/ee/14fcdd0e8b19108efd953cc5b38f409df39659bbec3b12afaa6dd3e2967b/torch-1.10.2-cp38-none-macosx_10_9_x86_64.whl", hash = "sha256:f281438ee99bd72ad65c0bba1026a32e45c3b636bc067fc145ad291e9ea2faab"},
+    {url = "https://files.pythonhosted.org/packages/82/49/cb675c5b70a081f39a2b09d0b4d98a2b14f08d895b3439fe3c0c48163018/torch-1.10.2-cp39-cp39-win_amd64.whl", hash = "sha256:901b52787baeb2e9e1357ca7037da0028bc6ad743f530e0040ae96ef8e27156c"},
+    {url = "https://files.pythonhosted.org/packages/97/46/5843fa34474ccbe5141c818b155189d086915cd8cb93b4230bcc341c208c/torch-1.10.2-cp39-none-macosx_10_9_x86_64.whl", hash = "sha256:5b68e9108bd7ebd99eee941686046c517cfaac5331f757bcf440fe02f2e3ced1"},
+    {url = "https://files.pythonhosted.org/packages/a4/54/81b1c3c574a1ffde54b0c82ed2a37d81395709cdd5f50e59970aeed5d95e/torch-1.10.2-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:258a0729fb77a3457d5822d84b536057cd119b08049a8d3c41dc3dcdeb48d56e"},
+    {url = "https://files.pythonhosted.org/packages/c0/2a/3401595e371a63195016968efd450c46048cf0d1b341adb33c029ab6aa1e/torch-1.10.2-cp38-none-macosx_11_0_arm64.whl", hash = "sha256:3592d3dd62b32760c82624e7586222747fe2281240e8653970b35f1d6d4a434c"},
+    {url = "https://files.pythonhosted.org/packages/c4/49/9da10fef2c2ba8ff91eeab70a123ca60d082b1012b3aff7825c9b1115852/torch-1.10.2-cp36-cp36m-win_amd64.whl", hash = "sha256:65fd02ed889c63fd82bf1a440c5a94c1310c29f3e6f9f62add416d34da355d97"},
+    {url = "https://files.pythonhosted.org/packages/cb/83/002f6ea66fe0d6691e0f67db8dff9405dd2f47d13c92505c483a05f4d759/torch-1.10.2-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:935e5ac804c5093c79f23a7e6ca5b912c166071aa9d8b4a0a3d6a85126d6a47b"},
+    {url = "https://files.pythonhosted.org/packages/d4/53/c4a13bbab1385d505c78064ad5ae6a63a990f207a559fcfe950bdeb5f96c/torch-1.10.2-cp38-cp38-win_amd64.whl", hash = "sha256:376fc18407add20daa6bbaaffc5a5e06d733abe53bcbd60ef2532bfed34bc091"},
+    {url = "https://files.pythonhosted.org/packages/f2/34/25fc738739fa145dd58aaaeb0f08f222c7a82d93b0900c2b2a9a54b27cef/torch-1.10.2-cp37-none-macosx_10_9_x86_64.whl", hash = "sha256:6da1b877880435440a5aa9678ef0f01986d4886416844db1d97ebfb7fd1778d0"},
+    {url = "https://files.pythonhosted.org/packages/f8/2c/ace8d8d942ccd064639fae6c366344d832fbca174b8df059396a5f51e3a5/torch-1.10.2-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:9ef4c004f9e5168bd1c1930c6aff25fed5b097de81db6271ffbb2e4fb8b89319"},
+]
+"typing-extensions 4.4.0" = [
+    {url = "https://files.pythonhosted.org/packages/0b/8e/f1a0a5a76cfef77e1eb6004cb49e5f8d72634da638420b9ea492ce8305e8/typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
+    {url = "https://files.pythonhosted.org/packages/e3/a7/8f4e456ef0adac43f452efc2d0e4b242ab831297f1bac60ac815d37eb9cf/typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
+]
+
+[metadata]
+lock_version = "4.0"
+content_hash = "sha256:dfd1b6557cfa7fde139745caf54b331a2e8f3e3e68ed04ba206200b6296593f6"
+

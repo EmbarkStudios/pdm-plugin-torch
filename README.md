@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# `?? pdm-plugin-torch `
+# `🔦 pdm-plugin-torch `
 
 A utility tool for selecting torch backend and version.
 
@@ -51,11 +51,6 @@ Currently PDM does not support specifying plugin-dependencies in your pyproject.
 ``` toml
 [tool.pdm.scripts]
 post_install = "pdm plugin add pdm-plugin-torch==$VERSION"
-```
-
-
-```bash
-pdm install
 ```
 
 ## Contribution
