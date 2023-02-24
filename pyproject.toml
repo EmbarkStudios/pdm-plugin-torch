@@ -8,6 +8,7 @@ authors = [
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
+dependencies = [ ]
 
 [tool.pdm.dev-dependencies]
 tools = [
@@ -15,6 +16,8 @@ tools = [
    "black~=22.1",
    "bandit~=1.7",
    "isort~=5.10",
+   "pytest",
+   "pytest-xdist",
 ]
 
 docs = [
@@ -36,8 +39,8 @@ build-backend = "pdm.pep517.api"
 pdm_plugin_torch = "pdm_plugin_torch.main:torch_plugin"
 
 [tool.pdm.build]
-package-dir = "src"
-includes = ["src/pdm_plugin_torch"]
+package-dir = "pdm-plugin-torch"
+includes = ["pdm-plugin-torch"]
 source-includes = ["tests", "CHANGELOG.md", "LICENSE", "README.md"]
 # editables backend doesn't work well with namespace packages
 editable-backend = "path"

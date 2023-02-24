@@ -5,7 +5,7 @@ source .buildkite/install-repo.sh
 echo --- Running pytest
 
 EXIT_CODE=0
-pdm run pytest --color=yes tests > errors.txt || EXIT_CODE=$?
+$1 run pytest --color=yes tests --pdm-bin $1 > errors.txt || EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ]; then
 	cat << EOF | buildkite-agent annotate --style "error" --context "pytest"

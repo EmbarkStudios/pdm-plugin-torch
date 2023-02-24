@@ -282,7 +282,7 @@ def get_settings(project: Project):
         return project.pyproject["tool"]["pdm"]["plugins"]["torch"]
 
     else:
-        return project.tool_settings["plugins"]["torch"]
+        return project.pyproject.settings["plugins"]["torch"]
 
 
 class TorchCommand(BaseCommand):
