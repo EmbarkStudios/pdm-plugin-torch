@@ -39,12 +39,12 @@ def pdm(request):
     pdm_name = request.config.getoption("--pdm-bin")
 
     def _invoker(args, dir):
-        return subprocess.check_output([pdm_name, *args], cwd=dir)
+        output = subprocess.check_output([pdm_name, *args], cwd=dir)
+        return output
 
     return _invoker
 
 
-@pytest.mark.incremental
 class TestPdmVariants:
     @staticmethod
     def test_install_plugin(tmpdir, pdm):
