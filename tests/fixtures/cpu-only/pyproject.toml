@@ -3,7 +3,7 @@ name = "test-cpu-only"
 authors = [
     {name = "Tom Solberg", email = "me@sbg.dev"},
 ]
-requires-python = "~=3.9.0"
+requires-python = "~=3.8.0"
 license = {text = "MIT"}
 dependencies = []
 description = ""
