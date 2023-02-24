@@ -17,7 +17,7 @@ $(cat errors.txt)
 
 EOF
 else
-	buildkite-agent annotate "✅ All tests passed." --style "success" --context "pytest"
+	buildkite-agent annotate "✅ All tests passed for $1." --style "success" --context "pytest-$1"
 fi
 
 exit $EXIT_CODE
