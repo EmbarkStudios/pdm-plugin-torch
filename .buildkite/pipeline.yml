@@ -1,6 +1,6 @@
 plugin_base: &plugin_base
     service-account-name: monorepo-ci
-    image: gcr.io/embark-shared/ml/ci-runner@sha256:34407f69dae312c51ee1b30df13e2d39d2fda624017c76a42cd9ecbce127ddae
+    image: gcr.io/embark-shared/ml/ci-runner@sha256:560f48600870310f1c8c99b4a533811af42f24f05b19578cab5afdd3063d65f3
     default-secret-name: buildkite-k8s-plugin
     always-pull: false
     use-agent-node-affinity: true
@@ -66,6 +66,7 @@ steps:
         matrix:
           - "pdm"
           - "pdm24"
+          - "pdm25"
         command: bash .buildkite/run-pytest.sh {{matrix}}
         << : *small
 
