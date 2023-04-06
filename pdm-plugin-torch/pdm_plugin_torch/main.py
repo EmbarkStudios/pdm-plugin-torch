@@ -140,7 +140,9 @@ else:
         locked_repository: LockedRepository | None = None
         if strategy != "all" or for_install:
             try:
-                locked_repository = project.locked_repository
+                locked_repository = LockedRepository(
+                    lockfile, sources, project.environment
+                )
             except Exception:
                 if for_install:
                     raise
@@ -262,7 +264,7 @@ def resolve_candidates_from_lockfile(
         if not req.marker or req.marker.evaluate(project.environment.marker_environment)
     ]
     with ui.logging("install-resolve"):
-        with ui.open_spinner("Resolving packages from lockfile..."):
+        with ui.open_spinner("Resolving packages from lockfile...") as spinner:
             reporter = BaseReporter()
             provider = get_provider(
                 project, raw_sources, for_install=True, lockfile=lockfile
@@ -274,6 +276,7 @@ def resolve_candidates_from_lockfile(
                 project.environment.python_requires,
                 resolve_max_rounds,
             )
+            spinner.update("Fetching hashes for resolved packages...")
             fetch_hashes(provider.repository, mapping)
 
     return mapping
@@ -304,7 +307,8 @@ def do_sync(
         only_keep=False,
     )
 
-    handler.synchronize()
+    with project.core.ui.logging("install"):
+        handler.synchronize()
 
 
 def read_lockfile(project: Project, lock_name: str) -> None:
@@ -439,6 +443,7 @@ class TorchCommand(BaseCommand):
                     "name": "torch",
                     "url": source,
                     "type": "index",
+                    "verify_ssl": True,
                 }
             ],
             requirements=reqs,
@@ -472,6 +477,7 @@ class TorchCommand(BaseCommand):
                 for req in plugin_config.dependencies
             ]
 
+            print(reqs)
             results[api] = do_lock(
                 project,
                 [
