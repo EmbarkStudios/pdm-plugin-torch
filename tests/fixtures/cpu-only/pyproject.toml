@@ -3,7 +3,7 @@ name = "test-cpu-only"
 authors = [
     {name = "Tom Solberg", email = "me@sbg.dev"},
 ]
-requires-python = "~=3.8.0"
+requires-python = ">=3.8"
 license = {text = "MIT"}
 dependencies = []
 description = ""
@@ -15,16 +15,16 @@ build-backend = "pdm.pep517.api"
 
 [tool.pdm.plugins.torch]
 dependencies = [
-   "torch==1.10.2"
+   "torch==1.11.0"
 ]
 lockfile = "torch.lock"
 enable-cpu = true
 
 enable-rocm = false
-rocm-versions = ["4.2"]
+rocm-versions = ["4.5.2"]
 
 enable-cuda = false
-cuda-versions = ["cu111", "cu113"]
+cuda-versions = ["cu115", "cu117"]
 
 [tool.pdm.scripts]
 post_install = "pdm plugin add ../../"
