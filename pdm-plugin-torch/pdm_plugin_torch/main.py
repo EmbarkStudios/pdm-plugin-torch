@@ -388,37 +388,10 @@ def get_settings(project: Project):
         return project.pyproject.settings["plugins"]["torch"]
 
 
-class TorchCommand(BaseCommand):
-    """Generate a lockfile for torch specifically."""
+class InstallCommand:
+    name = "install"
 
-    def add_arguments(self, parser):
-        subparsers = parser.add_subparsers(help="sub-command help", dest="command")
-        subparsers.required = True
-
-        parser_install = subparsers.add_parser(
-            "install", help="install a torch variant"
-        )
-        parser_install.add_argument(
-            "api", help="the api to use, e.g. cuda version or rocm"
-        )
-        parser_install.set_defaults(command="install")
-
-        parser_lock = subparsers.add_parser("lock", help="update lockfile")
-        parser_lock.add_argument(
-            "--check",
-            help="validate that the lockfile is up to date",
-            action="store_true",
-        )
-        parser_lock.set_defaults(command="lock")
-
-    def handle(self, project, options):
-        if options.command == "install":
-            self.handle_install(project, options)
-
-        elif options.command == "lock":
-            self.handle_lock(project, options)
-
-    def handle_install(self, project, options):
+    def handle(self, project: Project, options: dict):
         plugin_config = Configuration.from_toml(get_settings(project))
 
         resolves = plugin_config.variants
@@ -450,7 +423,11 @@ class TorchCommand(BaseCommand):
             lockfile=spec_for_version,
         )
 
-    def handle_lock(self, project, options):
+
+class LockCommand:
+    name = "lock"
+
+    def handle(self, project: Project, options: dict):
         plugin_config = Configuration.from_toml(get_settings(project))
 
         if options.check:
@@ -477,7 +454,6 @@ class TorchCommand(BaseCommand):
                 for req in plugin_config.dependencies
             ]
 
-            print(reqs)
             results[api] = do_lock(
                 project,
                 [
@@ -492,6 +468,35 @@ class TorchCommand(BaseCommand):
             )
 
         write_lockfile(project, plugin_config.lockfile, results)
+
+
+class TorchCommand(BaseCommand):
+    """Generate a lockfile for torch specifically."""
+
+    name = "torch"
+
+    def add_arguments(self, parser):
+        subparsers = parser.add_subparsers(help="sub-command help", dest="command")
+        subparsers.required = True
+
+        parser_install = subparsers.add_parser(
+            "install", help="install a torch variant"
+        )
+        parser_install.add_argument(
+            "api", help="the api to use, e.g. cuda version or rocm"
+        )
+        parser_install.set_defaults(command=InstallCommand())
+
+        parser_lock = subparsers.add_parser("lock", help="update lockfile")
+        parser_lock.add_argument(
+            "--check",
+            help="validate that the lockfile is up to date",
+            action="store_true",
+        )
+        parser_lock.set_defaults(command=LockCommand())
+
+    def handle(self, project, options):
+        options.command.handle(project, options)
 
 
 def torch_plugin(core: Core):
