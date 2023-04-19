@@ -57,13 +57,13 @@ class TestPdmVariants:
 
         tmpdir_project("cpu-only", tmpdir)
         with pytest.raises(subprocess.CalledProcessError):
-            pdm(["torch", "lock", "--check"], tmpdir)
+            pdm(["torch", "-v", "lock", "--check"], tmpdir)
 
     @staticmethod
     def test_lock_plugin_check_succeeds(tmpdir, pdm):
         tmpdir_project("cpu-only", tmpdir)
-        pdm(["torch", "lock"], tmpdir)
-        pdm(["torch", "lock", "--check"], tmpdir)
+        pdm(["torch", "-v", "lock"], tmpdir)
+        pdm(["torch", "-v", "lock", "--check"], tmpdir)
 
     @staticmethod
     def test_install_fails(tmpdir, pdm):
@@ -71,10 +71,10 @@ class TestPdmVariants:
 
         tmpdir_project("cpu-only", tmpdir)
         with pytest.raises(subprocess.CalledProcessError):
-            pdm(["torch", "install", "cpu"], tmpdir)
+            pdm(["torch", "-v", "install", "cpu"], tmpdir)
 
     @staticmethod
     def test_install_succeeds(tmpdir, pdm):
         tmpdir_project("cpu-only", tmpdir)
-        pdm(["torch", "lock"], tmpdir)
-        pdm(["torch", "install", "cpu"], tmpdir)
+        pdm(["torch", "-v", "lock"], tmpdir)
+        pdm(["torch", "-v", "install", "cpu"], tmpdir)
