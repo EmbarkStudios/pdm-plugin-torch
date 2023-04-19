@@ -496,4 +496,3 @@ class TorchCommand(BaseCommand):
 
 def torch_plugin(core: Core):
     core.register_command(TorchCommand, "torch")
-    core.add_config("hello.name", ConfigItem("The person's name", "John"))
