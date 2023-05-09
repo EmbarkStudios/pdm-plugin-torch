@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ["gh-docs"]
+    branches: ["main"]
 
   workflow_dispatch:
 
