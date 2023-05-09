@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: 3.8
           architecture: x64
-          version: 2.4.9
+          version: 2.5.6
           prerelease: false
           enable-pep582: true
           cache: true
