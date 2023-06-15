@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 This is the initial release
 
-[Unreleased]: https://github.com/EmbarkStudios/pdm-plugin-torch/compare/23.1.0...HEAD
+[Unreleased]: https://github.com/EmbarkStudios/pdm-plugin-torch/compare/23.1.1...HEAD
+[23.1.1]: https://github.com/EmbarkStudios/pdm-plugin-torch/compare/23.1.0...23.1.1
 [23.1.0]: https://github.com/EmbarkStudios/pdm-plugin-torch/compare/23.0.0...23.1.0
 [23.0.0]: https://github.com/EmbarkStudios/pdm-plugin-torch/releases/tag/23.0.0
