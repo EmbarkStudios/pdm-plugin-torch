@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [23.1.1] - 2023-06-15
 
-- Fix a bug where the command
-
+- Fix a bug where 2.5.0 would crash with an assertion.
 
 ## [23.1.0] - 2023-04-19
 
