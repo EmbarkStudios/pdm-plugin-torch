@@ -388,8 +388,12 @@ def get_settings(project: Project):
         return project.pyproject.settings["plugins"]["torch"]
 
 
-class InstallCommand:
+class InstallCommand(BaseCommand):
     name = "install"
+    description = "Install torch packages from lockfile"
+
+    def add_arguments(self, parser):
+        parser.add_argument("api", help="the api to use, e.g. cuda version or rocm")
 
     def handle(self, project: Project, options: dict):
         plugin_config = Configuration.from_toml(get_settings(project))
@@ -424,8 +428,16 @@ class InstallCommand:
         )
 
 
-class LockCommand:
+class LockCommand(BaseCommand):
     name = "lock"
+    description = "Lock Torch and its dependencies to a specific version"
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--check",
+            help="validate that the lockfile is up to date",
+            action="store_true",
+        )
 
     def handle(self, project: Project, options: dict):
         plugin_config = Configuration.from_toml(get_settings(project))
@@ -474,29 +486,20 @@ class TorchCommand(BaseCommand):
     """Generate a lockfile for torch specifically."""
 
     name = "torch"
+    description = "Manage torch dependencies"
 
     def add_arguments(self, parser):
-        subparsers = parser.add_subparsers(help="sub-command help", dest="command")
-        subparsers.required = True
-
-        parser_install = subparsers.add_parser(
-            "install", help="install a torch variant"
+        subparsers = parser.add_subparsers(
+            title="Sub commands", help="sub-command help", dest="command"
         )
-        parser_install.add_argument(
-            "api", help="the api to use, e.g. cuda version or rocm"
-        )
-        parser_install.set_defaults(command=InstallCommand())
 
-        parser_lock = subparsers.add_parser("lock", help="update lockfile")
-        parser_lock.add_argument(
-            "--check",
-            help="validate that the lockfile is up to date",
-            action="store_true",
-        )
-        parser_lock.set_defaults(command=LockCommand())
+        LockCommand.register_to(subparsers)
+        InstallCommand.register_to(subparsers)
 
-    def handle(self, project, options):
-        options.command.handle(project, options)
+        self.parser = parser
+
+    def handle(self, project: Project, options) -> None:
+        self.parser.print_help()
 
 
 def torch_plugin(core: Core):
