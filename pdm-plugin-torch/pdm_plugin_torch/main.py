@@ -29,10 +29,10 @@ from pdm_plugin_torch.config import Configuration
 def sources(project: Project, sources: list) -> list[RepositoryConfig]:
     result: dict[str, RepositoryConfig] = {}
     for source in project.pyproject.settings.get("source", []):
-        result[source["name"]] = RepositoryConfig(**source)
+        result[source["name"]] = RepositoryConfig(**source, config_prefix="pypi")
 
     for source in sources:
-        result[source["name"]] = RepositoryConfig(**source)
+        result[source["name"]] = RepositoryConfig(**source, config_prefix="torch")
 
     def merge_sources(other_sources: Iterable[tuple[str, RepositoryConfig]]) -> None:
         for name, source in other_sources:

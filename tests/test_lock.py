@@ -78,3 +78,10 @@ class TestPdmVariants:
         tmpdir_project("cpu-only", tmpdir)
         pdm(["torch", "-v", "lock"], tmpdir)
         pdm(["torch", "-v", "install", "cpu"], tmpdir)
+
+    @staticmethod
+    def test_import(tmpdir, pdm):
+        tmpdir_project("cpu-only", tmpdir)
+        pdm(["torch", "-v", "lock"], tmpdir)
+        pdm(["torch", "-v", "install", "cpu"], tmpdir)
+        pdm(["run", "python", "-c", "'import torch'"], tmpdir)
