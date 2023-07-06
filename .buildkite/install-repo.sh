@@ -7,4 +7,4 @@ gcloud config set account monorepo-ci@embark-builds.iam.gserviceaccount.com
 
 echo --- Installing dependencies
 
-pdm install -d
+${PDM_COMMAND:1:-1} install -d
