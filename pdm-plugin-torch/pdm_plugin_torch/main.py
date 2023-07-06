@@ -245,11 +245,10 @@ def do_sync(
     handler = project.core.synchronizer_class(
         candidates,
         project.environment,
-        False,
-        False,
+        clean=False,
+        dry_run=False,
         no_editable=True,
         install_self=False,
-        use_install_cache=project.config["install.cache"],
         reinstall=True,
         only_keep=False,
     )
