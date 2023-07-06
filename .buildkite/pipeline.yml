@@ -30,7 +30,7 @@ small: &small
       resources-limit-memory: 20Gi
 
 env:
-  PDM_COMMAND: pdm25
+  PDM_COMMAND: pdm27
 
 
 steps:
@@ -66,9 +66,9 @@ steps:
 
       - label: ":pytest: Run tests @ {{matrix}}"
         matrix:
-          - "pdm23"
-          - "pdm24"
           - "pdm25"
+          - "pdm26"
+          - "pdm27"
         command: bash .buildkite/run-pytest.sh {{matrix}}
         << : *small
 
