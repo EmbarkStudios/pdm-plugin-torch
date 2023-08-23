@@ -76,6 +76,8 @@ class TestPdmVariants:
     @staticmethod
     def test_install_succeeds(tmpdir, pdm):
         tmpdir_project("cpu-only", tmpdir)
+        print(pdm(["info"], tmpdir))
+        print(pdm(["info", "--env"], tmpdir))
         pdm(["torch", "-vv", "lock"], tmpdir)
         pdm(["torch", "-vv", "install", "cpu"], tmpdir)
 
