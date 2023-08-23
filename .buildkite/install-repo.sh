@@ -7,4 +7,9 @@ gcloud config set account monorepo-ci@embark-builds.iam.gserviceaccount.com
 
 echo --- Installing dependencies
 
+
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+${PDM_COMMAND:1:-1} use ${PYTHON_VERSION:1:-1}
 ${PDM_COMMAND:1:-1} install -d
