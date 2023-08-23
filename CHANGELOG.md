@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Drops support for PDM 2.3 and 2.4, adds support for PDM 2.6 and 2.7
+- Drops support for PDM 2.3 and 2.4, adds support for PDM 2.6-2.8
 
 ## [23.1.1] - 2023-06-15
 
