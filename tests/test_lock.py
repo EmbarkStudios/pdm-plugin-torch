@@ -32,7 +32,7 @@ def make_entry_point(plugin):
 def tmpdir_project(project_name, dest, pdm):
     source = FIXTURES / project_name
     copytree(source, dest)
-    pdm(["config", "cache_dir", str("/tmp/.pdm_cache")])
+    pdm(["config", "cache_dir", str("/tmp/.pdm_cache")], dest)
 
 
 @pytest.fixture
