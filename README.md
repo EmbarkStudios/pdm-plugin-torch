@@ -14,7 +14,7 @@ A utility tool for selecting torch backend and version.
 [![Embark](https://img.shields.io/badge/discord-ark-%237289da.svg?logo=discord)](https://discord.gg/dAuKfZS)
 [![Build status](https://badge.buildkite.com/968ac3c0bb075fb878f9f973ed91406c8b257b0f050c197542.svg?theme=github&branch=main)](https://buildkite.com/embark-studios/pdm-plugin-torch)
 [![Docs status](https://img.shields.io/badge/Docs-latest-brightgreen)](https://embarkstudios.github.io/pdm-plugin-torch/)
-[![pdm-managed](https://img.shields.io/badge/PDM-v2.3.0-blueviolet)](https://pdm.fming.dev)
+[![pdm-managed](https://img.shields.io/badge/PDM-v2.8.0-blueviolet)](https://pdm.fming.dev)
 
 </div>
 

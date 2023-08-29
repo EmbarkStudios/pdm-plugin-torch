@@ -1,6 +1,6 @@
 plugin_base: &plugin_base
     service-account-name: monorepo-ci
-    image: gcr.io/embark-shared/ml/ci-runner@sha256:59f978e2fa6f12a6e9714b59947028f89ad263f333a785531d58df8042af292a
+    image: gcr.io/embark-shared/ml/ci-runner@sha256:54904440250d9ae14f6ddf6d72c577f2e06c85f79aa6ebe31558c35cbb93280f
     default-secret-name: buildkite-k8s-plugin
     always-pull: false
     use-agent-node-affinity: true
@@ -29,7 +29,9 @@ small: &small
       resources-limit-cpu: 7
       resources-limit-memory: 20Gi
 
-
+env:
+  PDM_COMMAND: pdm27
+  PYTHON_VERSION: '3.9'
 
 steps:
   - group: ":passport_control: Validating PR"
@@ -64,9 +66,10 @@ steps:
 
       - label: ":pytest: Run tests @ {{matrix}}"
         matrix:
-          - "pdm23"
-          - "pdm24"
           - "pdm25"
+          - "pdm26"
+          - "pdm27"
+          - "pdm28"
         command: bash .buildkite/run-pytest.sh {{matrix}}
         << : *small
 

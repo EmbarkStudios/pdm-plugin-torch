@@ -29,9 +29,10 @@ def make_entry_point(plugin):
     return ret
 
 
-def tmpdir_project(project_name, dest):
+def tmpdir_project(project_name, dest, pdm):
     source = FIXTURES / project_name
     copytree(source, dest)
+    pdm(["config", "cache_dir", str("/tmp/.pdm_cache")], dest)
 
 
 @pytest.fixture
@@ -55,13 +56,13 @@ class TestPdmVariants:
     def test_lock_check_fails(tmpdir, pdm):
         import subprocess
 
-        tmpdir_project("cpu-only", tmpdir)
+        tmpdir_project("cpu-only", tmpdir, pdm)
         with pytest.raises(subprocess.CalledProcessError):
             pdm(["torch", "-v", "lock", "--check"], tmpdir)
 
     @staticmethod
     def test_lock_plugin_check_succeeds(tmpdir, pdm):
-        tmpdir_project("cpu-only", tmpdir)
+        tmpdir_project("cpu-only", tmpdir, pdm)
         pdm(["torch", "-v", "lock"], tmpdir)
         pdm(["torch", "-v", "lock", "--check"], tmpdir)
 
@@ -69,12 +70,19 @@ class TestPdmVariants:
     def test_install_fails(tmpdir, pdm):
         import subprocess
 
-        tmpdir_project("cpu-only", tmpdir)
+        tmpdir_project("cpu-only", tmpdir, pdm)
         with pytest.raises(subprocess.CalledProcessError):
             pdm(["torch", "-v", "install", "cpu"], tmpdir)
 
     @staticmethod
     def test_install_succeeds(tmpdir, pdm):
-        tmpdir_project("cpu-only", tmpdir)
+        tmpdir_project("cpu-only", tmpdir, pdm)
+        pdm(["torch", "-vv", "lock"], tmpdir)
+        pdm(["torch", "-vv", "install", "cpu"], tmpdir)
+
+    @staticmethod
+    def test_import(tmpdir, pdm):
+        tmpdir_project("cpu-only", tmpdir, pdm)
         pdm(["torch", "-v", "lock"], tmpdir)
         pdm(["torch", "-v", "install", "cpu"], tmpdir)
+        pdm(["run", "python", "-c", "'import torch'"], tmpdir)

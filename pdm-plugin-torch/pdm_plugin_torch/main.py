@@ -6,16 +6,16 @@ from typing import Iterable
 
 import tomlkit
 
-from pdm import __version__, termui
+from pdm import termui
+from pdm._types import RepositoryConfig
 from pdm.cli.commands.base import BaseCommand
 from pdm.cli.utils import fetch_hashes, format_lockfile, format_resolution_impossible
 from pdm.core import Core
 from pdm.models.candidates import Candidate
 from pdm.models.repositories import BaseRepository, LockedRepository
 from pdm.models.requirements import Requirement, parse_requirement
-from pdm.models.specifiers import PySpecSet, get_specifier
+from pdm.models.specifiers import get_specifier
 from pdm.project import Project
-from pdm.project.config import ConfigItem
 from pdm.resolver import resolve
 from pdm.resolver.providers import BaseProvider
 from pdm.termui import Verbosity
@@ -26,150 +26,97 @@ from resolvelib.resolvers import ResolutionImpossible, ResolutionTooDeep, Resolv
 from pdm_plugin_torch.config import Configuration
 
 
-is_pdm22 = PySpecSet("<2.3").contains(__version__.__version__)
-is_pdm24 = PySpecSet("<2.5").contains(__version__.__version__)
+def sources(project: Project, sources: list) -> list[RepositoryConfig]:
+    result: dict[str, RepositoryConfig] = {}
+    for source in project.pyproject.settings.get("source", []):
+        result[source["name"]] = RepositoryConfig(**source, config_prefix="pypi")
 
-if is_pdm24:
-    from pdm._types import Source as RepositoryConfig
+    for source in sources:
+        result[source["name"]] = RepositoryConfig(**source, config_prefix="torch")
 
-    def sources(project: Project, sources: list) -> list[RepositoryConfig]:
-        if all(source.get("name") != "pypi" for source in sources):
-            sources.insert(0, project.default_source)
-
-        expanded_sources: list[RepositoryConfig] = [
-            RepositoryConfig(
-                url=s["url"],
-                verify_ssl=s.get("verify_ssl", True),
-                name=s.get("name"),
-                type=s.get("type", "index"),
-            )
-            for s in sources
-        ]
-        return expanded_sources
-
-    def get_provider(
-        project: Project,
-        raw_sources: list,
-        strategy: str = "all",
-        for_install: bool = False,
-        lockfile: dict = None,
-    ) -> BaseProvider:
-        """Build a provider class for resolver.
-        :param strategy: the resolve strategy
-        :param tracked_names: the names of packages that needs to update
-        :param for_install: if the provider is for install
-        :returns: The provider object
-        """
-
-        from pdm.resolver.providers import BaseProvider
-
-        repository = get_repository(
-            project, raw_sources, for_install=for_install, lockfile=lockfile
-        )
-        allow_prereleases = False
-
-        return BaseProvider(repository, allow_prereleases, [])
-
-else:
-    from pdm._types import RepositoryConfig
-
-    def sources(project: Project, sources: list) -> list[RepositoryConfig]:
-        result: dict[str, RepositoryConfig] = {}
-        for source in project.pyproject.settings.get("source", []):
-            result[source["name"]] = RepositoryConfig(**source)
-
-        for source in sources:
-            result[source["name"]] = RepositoryConfig(**source)
-
-        def merge_sources(
-            other_sources: Iterable[tuple[str, RepositoryConfig]]
-        ) -> None:
-            for name, source in other_sources:
-                source.name = name
-                if name in result:
-                    result[name].passive_update(source)
-                else:
-                    result[name] = source
-
-        if not project.config.get("pypi.ignore_stored_index", False):
-            if "pypi" not in result:  # put pypi source at the beginning
-                result = {"pypi": project.default_source, **result}
+    def merge_sources(other_sources: Iterable[tuple[str, RepositoryConfig]]) -> None:
+        for name, source in other_sources:
+            source.name = name
+            if name in result:
+                result[name].passive_update(source)
             else:
-                result["pypi"].passive_update(project.default_source)
-            merge_sources(project.project_config.iter_sources())
-            merge_sources(project.global_config.iter_sources())
+                result[name] = source
 
-        for source in result.values():
-            assert source.url, "Source URL must not be empty"
-            source.url = expand_env_vars_in_auth(source.url)
+    if not project.config.get("pypi.ignore_stored_index", False):
+        if "pypi" not in result:  # put pypi source at the beginning
+            result = {"pypi": project.default_source, **result}
+        else:
+            result["pypi"].passive_update(project.default_source)
+        merge_sources(project.project_config.iter_sources())
+        merge_sources(project.global_config.iter_sources())
 
-        return list(result.values())
+    for source in result.values():
+        assert source.url, "Source URL must not be empty"
+        source.url = expand_env_vars_in_auth(source.url)
 
-    def get_provider(
-        project: Project,
-        raw_sources: list,
-        strategy: str = "all",
-        for_install: bool = False,
-        lockfile: dict = None,
-        tracked_names: Iterable[str] | None = None,
-        allow_prereleases: bool = False,
-    ) -> BaseProvider:
-        """Build a provider class for resolver.
-        :param strategy: the resolve strategy
-        :param tracked_names: the names of packages that needs to update
-        :param for_install: if the provider is for install
-        :returns: The provider object
-        """
-        from pdm.models.requirements import strip_extras
-        from pdm.resolver.providers import (
-            BaseProvider,
-            EagerUpdateProvider,
-            ReusePinProvider,
-        )
-        from pdm.utils import normalize_name
+    return list(result.values())
 
-        repository = get_repository(
-            project, raw_sources, for_install=for_install, lockfile=lockfile
-        )
 
-        overrides = {
-            normalize_name(k): v
-            for k, v in project.pyproject.resolution_overrides.items()
-        }
+def get_provider(
+    project: Project,
+    raw_sources: list,
+    strategy: str = "all",
+    for_install: bool = False,
+    lockfile: dict = None,
+    tracked_names: Iterable[str] | None = None,
+    allow_prereleases: bool = False,
+) -> BaseProvider:
+    """Build a provider class for resolver.
+    :param strategy: the resolve strategy
+    :param tracked_names: the names of packages that needs to update
+    :param for_install: if the provider is for install
+    :returns: The provider object
+    """
+    from pdm.models.requirements import strip_extras
+    from pdm.resolver.providers import (
+        BaseProvider,
+        EagerUpdateProvider,
+        ReusePinProvider,
+    )
+    from pdm.utils import normalize_name
 
-        locked_repository: LockedRepository | None = None
-        if strategy != "all" or for_install:
-            try:
-                locked_repository = LockedRepository(
-                    lockfile, sources, project.environment
-                )
-            except Exception:
-                if for_install:
-                    raise
-                project.core.ui.echo(
-                    "Unable to reuse the lock file as it is not compatible with PDM",
-                    style="warning",
-                    err=True,
-                )
+    repository = get_repository(
+        project, raw_sources, for_install=for_install, lockfile=lockfile
+    )
 
-        if locked_repository is None:
-            return BaseProvider(repository, allow_prereleases, overrides)
+    overrides = {
+        normalize_name(k): v for k, v in project.pyproject.resolution_overrides.items()
+    }
 
-        if for_install:
-            return BaseProvider(locked_repository, allow_prereleases, overrides)
+    locked_repository: LockedRepository | None = None
+    if strategy != "all" or for_install:
+        try:
+            locked_repository = LockedRepository(lockfile, sources, project.environment)
+        except Exception:
+            if for_install:
+                raise
+            project.core.ui.echo(
+                "Unable to reuse the lock file as it is not compatible with PDM",
+                style="warning",
+                err=True,
+            )
 
-        provider_class = (
-            ReusePinProvider if strategy == "reuse" else EagerUpdateProvider
-        )
-        tracked_names = [strip_extras(name)[0] for name in tracked_names or ()]
+    if locked_repository is None:
+        return BaseProvider(repository, allow_prereleases, overrides)
 
-        return provider_class(
-            locked_repository.all_candidates,
-            tracked_names,
-            repository,
-            allow_prereleases,
-            overrides,
-        )
+    if for_install:
+        return BaseProvider(locked_repository, allow_prereleases, overrides)
+
+    provider_class = ReusePinProvider if strategy == "reuse" else EagerUpdateProvider
+    tracked_names = [strip_extras(name)[0] for name in tracked_names or ()]
+
+    return provider_class(
+        locked_repository.all_candidates,
+        tracked_names,
+        repository,
+        allow_prereleases,
+        overrides,
+    )
 
 
 def get_repository(
@@ -298,11 +245,10 @@ def do_sync(
     handler = project.core.synchronizer_class(
         candidates,
         project.environment,
-        False,
-        False,
+        clean=False,
+        dry_run=False,
         no_editable=True,
         install_self=False,
-        use_install_cache=project.config["install.cache"],
         reinstall=True,
         only_keep=False,
     )
@@ -332,9 +278,6 @@ def is_lockfile_compatible(project: Project, lock_name: str) -> bool:
         lockfile_version += ".0"
 
     accepted = get_specifier(f"~={lockfile_version}")
-    if is_pdm22:
-        return accepted.contains(project.LOCKFILE_VERSION)
-
     return accepted.contains(project.lockfile.spec_version)
 
 
@@ -349,10 +292,7 @@ def is_lockfile_hash_match(project: Project, lock_name: str) -> bool:
         return False
 
     algo, hash_value = hash_in_lockfile.split(":")
-    if is_pdm22:
-        content_hash = project.get_content_hash(algo)
-    else:
-        content_hash = project.pyproject.content_hash(algo)
+    content_hash = project.pyproject.content_hash(algo)
 
     return content_hash == hash_value
 
@@ -381,11 +321,7 @@ def check_lockfile(project: Project, lock_name: str) -> str | None:
 
 
 def get_settings(project: Project):
-    if is_pdm22:
-        return project.pyproject["tool"]["pdm"]["plugins"]["torch"]
-
-    else:
-        return project.pyproject.settings["plugins"]["torch"]
+    return project.pyproject.settings["plugins"]["torch"]
 
 
 class InstallCommand(BaseCommand):

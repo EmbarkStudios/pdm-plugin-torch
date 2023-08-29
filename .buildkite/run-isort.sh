@@ -5,7 +5,7 @@ source .buildkite/install-repo.sh
 echo --- Running isort
 
 EXIT_CODE=0
-pdm run isort --check --diff pdm-plugin-torch tests > diff.txt || EXIT_CODE=$?
+${PDM_COMMAND:1:-1} run isort --check --diff pdm-plugin-torch tests > diff.txt || EXIT_CODE=$?
 cat diff.txt
 
 if [ $EXIT_CODE -ne 0 ]; then

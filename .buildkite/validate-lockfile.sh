@@ -1,7 +1,7 @@
 set -eo pipefail
 
 EXIT_CODE=0
-pdm lock --check || EXIT_CODE=$?
+${PDM_COMMAND:1:-1} lock --check || EXIT_CODE=$?
 
 if [ $EXIT_CODE -ne 0 ]; then
     buildkite-agent annotate --style "error" --context "lockfile" ":lock: Failed validating lockfile. See logs for more info."
