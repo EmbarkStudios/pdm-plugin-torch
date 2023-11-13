@@ -180,7 +180,7 @@ def do_lock(
             ui.echo(format_resolution_impossible(err), err=True)
             raise ResolutionImpossible("Unable to find a resolution") from None
         else:
-            data = format_lockfile(project, mapping, dependencies)
+            data = format_lockfile(project, mapping, dependencies, static_urls=True)
             ui.echo(f"{termui.Emoji.LOCK} Lock successful")
             return data
 
@@ -251,6 +251,7 @@ def do_sync(
         install_self=False,
         reinstall=True,
         only_keep=False,
+        fail_fast=True,
     )
 
     with project.core.ui.logging("install"):
