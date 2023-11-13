@@ -40,6 +40,6 @@ class Configuration:
                 )
 
         if self.enable_cpu:
-            resolves["cpu"] = ("https://download.pytorch.org/whl/cpu", "")
+            resolves["cpu"] = ("https://download.pytorch.org/whl/cpu", "+cpu")
 
         return resolves
