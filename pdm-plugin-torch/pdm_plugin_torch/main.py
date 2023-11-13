@@ -6,7 +6,7 @@ from typing import Iterable
 
 import tomlkit
 
-from pdm import termui
+from pdm import __version__, termui
 from pdm._types import RepositoryConfig
 from pdm.cli.commands.base import BaseCommand
 from pdm.cli.utils import fetch_hashes, format_lockfile, format_resolution_impossible
@@ -14,7 +14,7 @@ from pdm.core import Core
 from pdm.models.candidates import Candidate
 from pdm.models.repositories import BaseRepository, LockedRepository
 from pdm.models.requirements import Requirement, parse_requirement
-from pdm.models.specifiers import get_specifier
+from pdm.models.specifiers import PySpecSet, get_specifier
 from pdm.project import Project
 from pdm.resolver import resolve
 from pdm.resolver.providers import BaseProvider
@@ -24,6 +24,9 @@ from resolvelib.reporters import BaseReporter
 from resolvelib.resolvers import ResolutionImpossible, ResolutionTooDeep, Resolver
 
 from pdm_plugin_torch.config import Configuration
+
+
+is_pdm210 = PySpecSet(">=2.10").contains(__version__.__version__)
 
 
 def sources(project: Project, sources: list) -> list[RepositoryConfig]:
@@ -180,7 +183,19 @@ def do_lock(
             ui.echo(format_resolution_impossible(err), err=True)
             raise ResolutionImpossible("Unable to find a resolution") from None
         else:
-            data = format_lockfile(project, mapping, dependencies, static_urls=True)
+            if is_pdm210:
+                from pdm.project.lockfile import FLAG_STATIC_URLS
+
+                data = format_lockfile(
+                    project,
+                    mapping,
+                    dependencies,
+                    groups=[],
+                    strategy={FLAG_STATIC_URLS},
+                )
+            else:
+                data = format_lockfile(project, mapping, dependencies, static_urls=True)
+
             ui.echo(f"{termui.Emoji.LOCK} Lock successful")
             return data
 
@@ -249,7 +264,7 @@ def do_sync(
         dry_run=False,
         no_editable=True,
         install_self=False,
-        reinstall=True,
+        reinstall=False,
         only_keep=False,
         fail_fast=True,
     )
@@ -344,7 +359,30 @@ class InstallCommand(BaseCommand):
         lockfile = read_lockfile(project, plugin_config.lockfile)
 
         spec_for_version = lockfile[options.api]
+
         (source, local_version) = resolves[options.api]
+
+        if is_pdm210:
+            from pdm.project.lockfile import FLAG_STATIC_URLS
+
+            class OverrideLockfile:
+                def __init__(self, lockfile):
+                    self._lockfile = lockfile
+
+                @property
+                def strategy(self):
+                    strategies = self._lockfile.strategy
+                    strategies.add(FLAG_STATIC_URLS)
+
+                    return strategies
+
+                def __getattr__(self, name):
+                    return getattr(self._lockfile, name)
+
+            original_lockfile = project.lockfile
+
+            project._lockfile = OverrideLockfile(original_lockfile)
+
         reqs = [
             parse_requirement(f"{req}{local_version}", False)
             for req in plugin_config.dependencies
@@ -363,6 +401,9 @@ class InstallCommand(BaseCommand):
             requirements=reqs,
             lockfile=spec_for_version,
         )
+
+        if is_pdm210:
+            project._lockfile = original_lockfile
 
 
 class LockCommand(BaseCommand):
