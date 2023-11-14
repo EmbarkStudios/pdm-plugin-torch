@@ -30,7 +30,7 @@ small: &small
       resources-limit-memory: 20Gi
 
 env:
-  PDM_COMMAND: pdm27
+  PDM_COMMAND: pdm210
   PYTHON_VERSION: '3.9'
 
 steps:
