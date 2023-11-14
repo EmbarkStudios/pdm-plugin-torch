@@ -32,14 +32,20 @@ dependencies are locked.
 Usage
 =====
 
-Currently PDM does not support specifying plugin-dependencies in your pyproject.toml. Thus, we suggest using a setup like the following:
+PDM supports specifying plugin-dependencies in your pyproject.toml, which is the suggested installation method. Note that in `pdm-plugin-torch` versions before 23.4.0, our configuration was in `tool.pdm.plugins.torch`. If upgrading, you'll need to also change that to `tool.pdm.plugin.torch`.
 
 
 .. code-block::
 
-    [tool.pdm.scripts]
-    post_install = "pdm plugin add pdm-plugin-torch==$VERSION"
+    [tool.pdm]
+	plugins = ["pdm-plugin-torch>=$VERSION"]
 
+It is also suggested to use a `post_lock` hook to update the lockfile when a regular lock is made:
+
+.. code-block::
+
+    [tool.pdm.scripts]
+    post_lock = "pdm torch lock"
 
 
 Configuration
@@ -49,7 +55,7 @@ These are the supported options:
 
 .. code-block::
 
-    [tool.pdm.plugins.torch]
+    [tool.pdm.plugin.torch]
     dependencies = [
        "torch==1.10.2"
     ]

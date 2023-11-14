@@ -346,7 +346,7 @@ def check_lockfile(project: Project, lock_name: str) -> str | None:
 
 
 def get_settings(project: Project):
-    return project.pyproject.settings["plugins"]["torch"]
+    return project.pyproject.settings["plugin"]["torch"]
 
 
 class InstallCommand(BaseCommand):

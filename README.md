@@ -30,7 +30,7 @@ This tool generate multiple lockfiles *only for torch* and allows you to use a p
 These are the supported options:
 
 ```toml
-[tool.pdm.plugins.torch]
+[tool.pdm.plugin.torch]
 dependencies = [
    "torch==1.10.2"
 ]
@@ -46,11 +46,11 @@ cuda-versions = ["cu111", "cu113"]
 
 ## Installation
 
-Currently PDM does not support specifying plugin-dependencies in your pyproject.toml. Thus, we suggest using a setup like the following:
+PDM supports specifying plugin-dependencies in your pyproject.toml, which is the suggested installation method. Note that in `pdm-plugin-torch` versions before 23.4.0, our configuration was in `tool.pdm.plugins.torch`. If upgrading, you'll need to also change that to `tool.pdm.plugin.torch`.
 
 ``` toml
-[tool.pdm.scripts]
-post_install = "pdm plugin add pdm-plugin-torch==$VERSION"
+[tool.pdm]
+plugins = ["pdm-plugin-torch==$VERSION"]
 ```
 
 ## Contribution
