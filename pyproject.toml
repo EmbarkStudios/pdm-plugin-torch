@@ -1,6 +1,6 @@
 [project]
 name = "pdm-plugin-torch"
-version = "23.2.0"
+version = "23.3.0"
 description = "A plugin to help installing torch versions"
 authors = [
     {name = "Embark Studios", email = "python@embark-studios.com"},
@@ -32,8 +32,8 @@ docs = [
 repository = "https://github.com/EmbarkStudios/pdm-plugin-torch"
 
 [build-system]
-requires = ["pdm-pep517>=1.0.0"]
-build-backend = "pdm.pep517.api"
+requires = ["pdm-backend>=2.0.0"]
+build-backend = "pdm.backend"
 
 [project.entry-points.pdm]
 pdm_plugin_torch = "pdm_plugin_torch.main:torch_plugin"
