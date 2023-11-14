@@ -1,6 +1,6 @@
 plugin_base: &plugin_base
     service-account-name: monorepo-ci
-    image: gcr.io/embark-shared/ml/ci-runner@sha256:54904440250d9ae14f6ddf6d72c577f2e06c85f79aa6ebe31558c35cbb93280f
+    image: gcr.io/embark-shared/ml/ci-runner@sha256:dac3595ade7e3e92ed006f6c29f461b71bb3a6b0ade8d3afb88ba8e55b9601d6
     default-secret-name: buildkite-k8s-plugin
     always-pull: false
     use-agent-node-affinity: true
@@ -30,7 +30,7 @@ small: &small
       resources-limit-memory: 20Gi
 
 env:
-  PDM_COMMAND: pdm27
+  PDM_COMMAND: pdm210
   PYTHON_VERSION: '3.9'
 
 steps:
@@ -69,7 +69,9 @@ steps:
           - "pdm25"
           - "pdm26"
           - "pdm27"
-          - "pdm28"
+          - "pdm29"
+          - "pdm210"
+
         command: bash .buildkite/run-pytest.sh {{matrix}}
         << : *small
 
