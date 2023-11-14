@@ -27,6 +27,7 @@ from pdm_plugin_torch.config import Configuration
 
 
 is_pdm210 = PySpecSet(">=2.10").contains(__version__.__version__)
+is_pdm28 = PySpecSet(">=2.8").contains(__version__.__version__)
 
 
 def sources(project: Project, sources: list) -> list[RepositoryConfig]:
@@ -193,8 +194,10 @@ def do_lock(
                     groups=[],
                     strategy={FLAG_STATIC_URLS},
                 )
-            else:
+            elif is_pdm28:
                 data = format_lockfile(project, mapping, dependencies, static_urls=True)
+            else:
+                data = format_lockfile(project, mapping, dependencies)
 
             ui.echo(f"{termui.Emoji.LOCK} Lock successful")
             return data
