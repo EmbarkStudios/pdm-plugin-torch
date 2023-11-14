@@ -69,7 +69,6 @@ steps:
           - "pdm25"
           - "pdm26"
           - "pdm27"
-          - "pdm28"
           - "pdm29"
           - "pdm210"
 
