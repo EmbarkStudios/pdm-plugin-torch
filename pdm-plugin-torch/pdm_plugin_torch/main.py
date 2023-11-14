@@ -27,6 +27,7 @@ from pdm_plugin_torch.config import Configuration
 
 
 is_pdm210 = PySpecSet(">=2.10").contains(__version__.__version__)
+is_pdm29 = PySpecSet(">=2.9").contains(__version__.__version__)
 is_pdm28 = PySpecSet(">=2.8").contains(__version__.__version__)
 
 
@@ -194,8 +195,13 @@ def do_lock(
                     groups=[],
                     strategy={FLAG_STATIC_URLS},
                 )
+
+            elif is_pdm29:
+                data = format_lockfile(project, mapping, dependencies, static_urls=True)
+
             elif is_pdm28:
                 data = format_lockfile(project, mapping, dependencies, static_urls=True)
+
             else:
                 data = format_lockfile(project, mapping, dependencies)
 
@@ -484,4 +490,8 @@ class TorchCommand(BaseCommand):
 
 
 def torch_plugin(core: Core):
+    if is_pdm28 and not is_pdm29:
+        raise RuntimeError(
+            "pdm 2.8.* is not supported due to not https://github.com/pdm-project/pdm/issues/2151"
+        )
     core.register_command(TorchCommand, "torch")
