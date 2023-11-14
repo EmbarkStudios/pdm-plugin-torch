@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [23.4.0] - 2023-11-14
+
+- Configuration is now expected at `tool.pdm.plugin.torch`. Note the missing `s`. This is to avoid collision with the upstream configuration key.
+
 ## [23.3.0] - 2023-11-14
 
 - Add support for PDM 2.9 and 2.10

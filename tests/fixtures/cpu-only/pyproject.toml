@@ -10,10 +10,15 @@ description = ""
 version = "0.0.01"
 
 [build-system]
-requires = ["pdm-pep517"]
-build-backend = "pdm.pep517.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
-[tool.pdm.plugins.torch]
+[tool.pdm]
+plugins = [
+    "../../"
+]
+
+[tool.pdm.plugin.torch]
 dependencies = [
    "torch==1.11.0"
 ]
@@ -27,5 +32,4 @@ enable-cuda = false
 cuda-versions = ["cu115", "cu117"]
 
 [tool.pdm.scripts]
-post_install = "pdm plugin add ../../"
 post_lock = "pdm torch lock"
