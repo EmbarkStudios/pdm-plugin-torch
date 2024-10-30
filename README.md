@@ -4,9 +4,6 @@
 <!-- inline html -->
 <!-- markdownlint-disable-file MD033 -->
 
-> **warning**
-> This plugin is unmaintained, and broken due to breaking in upstream APIs. It will not be updated here.
-
 <div align="center">
 
 # `🔦 pdm-plugin-torch `
@@ -21,6 +18,8 @@ A utility tool for selecting torch backend and version.
 
 </div>
 
+> **Warning**
+> This plugin is unmaintained, and broken due to breaking in upstream APIs. It will not be updated here.
 
 ## What it does
 
